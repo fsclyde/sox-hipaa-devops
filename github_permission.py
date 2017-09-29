@@ -126,7 +126,7 @@ def lambda_handler(event,context):
                 tab_repo.append(data_repo)
                 data_repo = {}
 
-    filename = "RepositoryAccessReport_{}".format(datetime.datetime.now().isoformat())
+    filename = "RepositoryAccessReport_{}.csv".format(datetime.datetime.now().isoformat())
     with open(filename, 'w') as csvfile:
         fieldnames = ['repo_name', 'privacy_status','team_name','team_permission']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
@@ -150,7 +150,7 @@ def lambda_handler(event,context):
     # Extract team and members
     data_team = myManageGithub.getTeamNameStand()
 
-    filename = "UsersAccessRepoReport_{}".format(datetime.datetime.now().isoformat())
+    filename = "UsersAccessRepoReport_{}.csv".format(datetime.datetime.now().isoformat())
     with open(filename, 'w') as csvfile:
         fieldnames = ['team_name', 'team_description','team_members','members_permission',]
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
