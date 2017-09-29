@@ -87,3 +87,13 @@ ENV/
 
 # Rope project settings
 .ropeproject
+/certifi/
+/requests/
+/chardet-3.0.4.dist-info/
+/idna/
+/idna-2.6.dist-info/
+/chardet/
+/requests-2.18.4.dist-info/
+/certifi-2017.7.27.1.dist-info/
+/urllib3-1.22.dist-info/
+/urllib3/

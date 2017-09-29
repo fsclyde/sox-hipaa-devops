@@ -10,6 +10,7 @@ import config, sys,re, boto3, base64
 kms = boto3.client('kms')
 from functions import *
 from config import *
+import csv
 
 #
 # This function extract github permissions per repository for audit
@@ -52,8 +53,8 @@ class manageGithub:
             for item in data:
                 dict_team["team_name"] = item["name"]
                 dict_team["team_permission"] = item["permission"]
-                dict_team["team_description "] = item["description"]
-                dict_team["team_member "] = self.getTeamMemb(item["id"])
+                dict_team["team_description"] = item["description"]
+                dict_team["team_member"] = self.getTeamMemb(item["id"])
                 array_team.append(dict_team)
                 dict_team = {}
 
@@ -99,35 +100,73 @@ class manageGithub:
 def lambda_handler(event,context):
     data_repo = {}
     tab_repo = []
+    big_data = []
+    test = []
     myManageGithub = manageGithub()
-    res = myManageFunc.githubGetRequest("orgs/{}/repos".format(config.GITHUB_ORGANISATION))
-    data = myManageFunc.manageStatusCode(res)
+    nb = 1
+
+    while nb != 4:
+        res = myManageFunc.githubGetRequest("orgs/{}/repos?page={}".format(config.GITHUB_ORGANISATION,nb))
+        data = myManageFunc.manageStatusCode(res)
+        big_data.append(data)
+        nb += 1
 
     # Process on repositories
-    if data:
-        for item in data:
-            repo_name = item["name"]
-            status = item["private"]
-            teams_name = myManageGithub.getTeamName(repo_name)
+    if big_data:
+        for data in big_data:
+            for item in data:
+                repo_name = item["name"]
+                status = item["private"]
+                teams_name = myManageGithub.getTeamName(repo_name)
 
-            data_repo["repo_name"] = repo_name
-            data_repo["status"] = status
-            data_repo["teams_name"] = teams_name
+                data_repo["repo_name"] = repo_name
+                data_repo["status"] = status
+                data_repo["teams_name"] = teams_name
 
-            tab_repo.append(data_repo)
-            data_repo = {}
+                tab_repo.append(data_repo)
+                data_repo = {}
+
+    filename = "RepositoryAccessReport_{}".format(datetime.datetime.now().isoformat())
+    with open(filename, 'w') as csvfile:
+        fieldnames = ['repo_name', 'privacy_status','team_name','team_permission']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+
+        for row_repo in tab_repo:
+            if row_repo["teams_name"]:
+                for row_repo_team in row_repo["teams_name"]:
+                    writer.writerow({'repo_name': row_repo["repo_name"],
+                                     'privacy_status': row_repo["status"],
+                                     'team_name': row_repo_team["team_name"],
+                                     'team_permission': row_repo_team["team_permission"]})
+            else:
+                writer.writerow({'repo_name': row_repo["repo_name"], 'privacy_status': row_repo["status"],
+                                 'team_name': "not_found",
+                                 'team_permission': "not_found"})
+
+
+    ########################################
 
     # Extract team and members
-    data = myManageGithub.getTeamNameStand()
+    data_team = myManageGithub.getTeamNameStand()
 
-    # Send information to slack
-    filename = "UsersAccessRepositoryReport_{}.json".format(datetime.datetime.now().isoformat())
-    myManageGithub.sendToSlack(data, filename)
+    filename = "UsersAccessRepoReport_{}".format(datetime.datetime.now().isoformat())
+    with open(filename, 'w') as csvfile:
+        fieldnames = ['team_name', 'team_description','team_members','members_permission',]
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
 
-    filename = "RepositoryTeamAccessReport_{}.json".format(datetime.datetime.now().isoformat())
-    myManageGithub.sendToSlack(tab_repo, filename)
-
-
+        for row_team in data_team:
+            if row_team["team_member"]:
+                for row_repo_member in row_team["team_member"]:
+                    writer.writerow({'team_name': row_team["team_name"],
+                                     'team_description': row_team["team_description"],
+                                     'team_members': row_repo_member["login"],
+                                     'members_permission': row_repo_member["site_admin"]})
+            else:
+                writer.writerow({'team_name': row_team["team_name"], 'team_description': row_team["team_description"],
+                                 'team_members': "not_found",
+                                 'members_permission': "not_found"})
 if __name__ == "__main__":
     event = context = {}
     lambda_handler(event,context)
