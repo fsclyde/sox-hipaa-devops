@@ -141,8 +141,8 @@ def lambda_handler(event,context):
                                      'team_permission': row_repo_team["team_permission"]})
             else:
                 writer.writerow({'repo_name': row_repo["repo_name"], 'privacy_status': row_repo["status"],
-                                 'team_name': "not_found",
-                                 'team_permission': "not_found"})
+                                 'team_name': "None",
+                                 'team_permission': "None"})
 
 
     ########################################
@@ -165,8 +165,8 @@ def lambda_handler(event,context):
                                      'members_permission': row_repo_member["site_admin"]})
             else:
                 writer.writerow({'team_name': row_team["team_name"], 'team_description': row_team["team_description"],
-                                 'team_members': "not_found",
-                                 'members_permission': "not_found"})
+                                 'team_members': "None",
+                                 'members_permission': "None"})
 if __name__ == "__main__":
     event = context = {}
     lambda_handler(event,context)
