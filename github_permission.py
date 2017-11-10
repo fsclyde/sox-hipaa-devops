@@ -1,4 +1,3 @@
-__author__ = "Clyde Fondop"
 #!/usr/local/bin/python
 #
 # All function shared
@@ -78,10 +77,8 @@ class manageGithub:
         return array_memb_info
 
     # Send reports to Slack
-    def sendToSlack(self, data, filename):
-        file = open(filename, 'w+')
-        file.write(json.dumps(data))
-        file.close()
+    def sendToSlack(self, filename):
+
 
         my_file = {
             'file': (filename, open(filename, 'rb'), 'json')
@@ -93,7 +90,7 @@ class manageGithub:
             "channels": ['#githubot'],
         }
 
-        # r = requests.post("https://slack.com/api/files.upload", params=payload, files=my_file)
+        r = requests.post("https://slack.com/api/files.upload", params=payload, files=my_file)
 
 
 # Main start
@@ -127,7 +124,7 @@ def lambda_handler(event,context):
                 data_repo = {}
 
     filename = "RepositoryAccessReport_{}.csv".format(datetime.datetime.now().isoformat())
-    with open(filename, 'w') as csvfile:
+    with open(filename, 'wb') as csvfile:
         fieldnames = ['repo_name', 'privacy_status','team_name','team_permission']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
@@ -143,7 +140,7 @@ def lambda_handler(event,context):
                 writer.writerow({'repo_name': row_repo["repo_name"], 'privacy_status': row_repo["status"],
                                  'team_name': "None",
                                  'team_permission': "None"})
-
+    myManageGithub.sendToSlack(filename)
 
     ########################################
 
@@ -151,8 +148,8 @@ def lambda_handler(event,context):
     data_team = myManageGithub.getTeamNameStand()
 
     filename = "UsersAccessRepoReport_{}.csv".format(datetime.datetime.now().isoformat())
-    with open(filename, 'w') as csvfile:
-        fieldnames = ['team_name', 'team_description','team_members','members_permission',]
+    with open(filename, 'wb') as csvfile:
+        fieldnames = ['team_name', 'team_description','team_members','member_who_has_admin',]
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
 
@@ -162,11 +159,18 @@ def lambda_handler(event,context):
                     writer.writerow({'team_name': row_team["team_name"],
                                      'team_description': row_team["team_description"],
                                      'team_members': row_repo_member["login"],
-                                     'members_permission': row_repo_member["site_admin"]})
+                                     'member_who_has_admin': row_repo_member["site_admin"]})
             else:
                 writer.writerow({'team_name': row_team["team_name"], 'team_description': row_team["team_description"],
                                  'team_members': "None",
-                                 'members_permission': "None"})
+                                 'member_who_has_admin': "None"})
+
+    myManageGithub.sendToSlack(filename)
+
+    # Send script that has create the report
+    myManageGithub.sendToSlack("github_permission.py")
+
+
 if __name__ == "__main__":
     event = context = {}
     lambda_handler(event,context)

@@ -1,0 +1,31 @@
+service: nwSOXrepositoryPermissions
+
+# you can overwrite defaults here
+stage: ${self:provider.stage}
+region: ${self:provider.region}
+
+provider:
+  name: aws
+  runtime: python2.7
+
+# Function Github request approval
+functions:
+  nwRepoPermission:
+    handler: github_permission.lambda_handler
+    name: nwRepoPermission
+    description: audit repository permission
+    runtime: python2.7
+    memorySize: 1536
+    timeout: 300
+    environment:
+      USERNAME: ${file(properties.yml):username}
+      PASSWORD: ${file(properties.yml):password}
+      API_TOKEN: ${file(properties.yml):api_token}
+    region: ${file(properties.yml):aws_region}
+    awsKmsKeyArn: arn:aws:kms:${file(properties.yml):aws_region}:${file(properties.yml):aws_accountid}:key/${file(properties.yml):kms_key_id}
+    vpc:
+      securityGroupIds:
+        - ${file(properties.yml):aws-lambda-sg}
+      subnetIds:
+        - ${file(properties.yml):aws-lambda-subnet1}
+        - ${file(properties.yml):aws-lambda-subnet2}
