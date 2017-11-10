@@ -28,3 +28,5 @@ var/
 /certifi-2017.11.5.dist-info/
 /urllib3-1.22.dist-info/
 /urllib3/
+
+*.pyc
