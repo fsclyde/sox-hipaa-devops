@@ -10,6 +10,14 @@ kms = boto3.client('kms')
 from functions import *
 from config import *
 import csv
+from datetime import timedelta
+
+
+s3r = boto3.resource('s3')
+s3 = boto3.client('s3')
+
+BUCKET_NAME = "newwave-sox-kwjer3209"
+mybucket = s3r.Bucket(BUCKET_NAME)
 
 #
 # This function extract github permissions per repository for audit
@@ -92,6 +100,20 @@ class manageGithub:
 
         r = requests.post("https://slack.com/api/files.upload", params=payload, files=my_file)
 
+# Function upload for the new file to s3 bucket
+def putObject(data, key_name):
+    AWS_EXPIRY = datetime.datetime.utcnow() + timedelta(minutes=(10))
+    Object = s3r.Object(BUCKET_NAME, key_name)
+    Object.put(Body=json.dumps(data), ContentType='application/json', ACL='authenticated-read')
+    # Generate the URL to get 'key-name' from 'bucket-name'
+    url = s3.generate_presigned_url(
+        ClientMethod='get_object',
+        Params={
+            'Bucket': BUCKET_NAME,
+            'Key': key_name
+        }
+    )
+    print(url)
 
 # Main start
 def lambda_handler(event,context):
@@ -123,52 +145,22 @@ def lambda_handler(event,context):
                 tab_repo.append(data_repo)
                 data_repo = {}
 
-    filename = "RepositoryAccessReport_{}.csv".format(datetime.datetime.now().isoformat())
-    with open(filename, 'wb') as csvfile:
-        fieldnames = ['repo_name', 'privacy_status','team_name','team_permission']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        writer.writeheader()
-
-        for row_repo in tab_repo:
-            if row_repo["teams_name"]:
-                for row_repo_team in row_repo["teams_name"]:
-                    writer.writerow({'repo_name': row_repo["repo_name"],
-                                     'privacy_status': row_repo["status"],
-                                     'team_name': row_repo_team["team_name"],
-                                     'team_permission': row_repo_team["team_permission"]})
-            else:
-                writer.writerow({'repo_name': row_repo["repo_name"], 'privacy_status': row_repo["status"],
-                                 'team_name': "None",
-                                 'team_permission': "None"})
-    myManageGithub.sendToSlack(filename)
-
-    ########################################
-
     # Extract team and members
     data_team = myManageGithub.getTeamNameStand()
 
-    filename = "UsersAccessRepoReport_{}.csv".format(datetime.datetime.now().isoformat())
-    with open(filename, 'wb') as csvfile:
-        fieldnames = ['team_name', 'team_description','team_members','member_who_has_admin',]
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        writer.writeheader()
+    # Team Access
+    filename = "users_permission/UsersAccessRepoReport.json"
+    putObject(data_team, filename)
 
-        for row_team in data_team:
-            if row_team["team_member"]:
-                for row_repo_member in row_team["team_member"]:
-                    writer.writerow({'team_name': row_team["team_name"],
-                                     'team_description': row_team["team_description"],
-                                     'team_members': row_repo_member["login"],
-                                     'member_who_has_admin': row_repo_member["site_admin"]})
-            else:
-                writer.writerow({'team_name': row_team["team_name"], 'team_description': row_team["team_description"],
-                                 'team_members': "None",
-                                 'member_who_has_admin': "None"})
+    # Repo Access
+    filename = "repositories_permission/RepositoryAccessReport.json"
+    putObject(tab_repo, filename)
 
-    myManageGithub.sendToSlack(filename)
-
-    # Send script that has create the report
-    myManageGithub.sendToSlack("github_permission.py")
+    # Script That has created the reports
+    filename = "github_permission.py"
+    f = open(filename, "r")
+    data_file = f.read()
+    putObject(data_file, "scripts/"+filename)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>New Wave Release Management Site</title>
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="script.js"></script>
+</head>
+<body onload="CreateTableFromJSON()">
+
+    <div class="container">
+  <div class="jumbotron">
+    <h1>New Wave - SOX Reports</h1>
+    </div>
+  </div>
+
+<div class="dropdown">
+  <button onclick="myFunction()" class="dropbtn">SOX Reports</button>  <button class="dropbtn" onclick="window.location.href='http://github.nw.adesa.com/clyde-fondop/sox-github-perms'">Reports Tools</button>
+ <button onclick="window.location.href='https://s3.amazonaws.com/newwave-sox-kwjer3209/scripts/github_permission.py'" class="dropbtn">Script</button>
+  <div id="myDropdown" class="dropdown-content">
+    <option onclick="gets3JSON('RepositoryAccessReport','repositories_permission')" value="prod">Github: Repository Permissions</option>
+    <option onclick="gets3JSON('UsersAccessRepoReport','users_permission')" value="uat">Github: Users Access</option>
+  </div>
+
+<div id="showData"></div>
+
+</div>
+</body>
+</html>
