@@ -15,7 +15,7 @@ functions:
     name: nwRepoPermission
     description: audit repository permission
     runtime: python2.7
-    memorySize: 1536
+    memorySize: 3008
     timeout: 300
     environment:
       USERNAME: ${file(properties.yml):username}

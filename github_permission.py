@@ -139,7 +139,7 @@ def lambda_handler(event,context):
                 teams_name = myManageGithub.getTeamName(repo_name)
 
                 data_repo["repo_name"] = repo_name
-                data_repo["status"] = status
+                data_repo["is_public"] = status
                 data_repo["teams_name"] = teams_name
 
                 tab_repo.append(data_repo)
