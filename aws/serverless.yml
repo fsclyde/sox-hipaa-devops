@@ -1,0 +1,25 @@
+# Environment: kar-adesa-pr
+service: nwSOXawsPermission
+
+# you can overwrite defaults here
+stage: ${self:provider.stage}
+region: ${self:provider.region}
+
+provider:
+  name: aws
+  runtime: python2.7
+
+# Function Github request approval
+functions:
+  nwRepoPermission:
+    handler: sox-users-admin.lambda_handler
+    name: nwSOXawsPermission
+    description: audit AWS Admin permissions
+    runtime: python2.7
+    memorySize: 1024
+    timeout: 120
+#    environment:
+#      ACCESS_KEY_PR: ${file(properties.yml):username}
+#      SECRET_KEY_PR: ${file(properties.yml):password}
+    region: ${file(properties.yml):aws_region}
+    role: arn:aws:iam::${file(properties.yml):aws_accountid}:role/${file(properties.yml):role_name}

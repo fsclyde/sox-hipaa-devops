@@ -30,3 +30,19 @@ var/
 /urllib3/
 
 *.pyc
+/aws/s3transfer-0.1.12.dist-info/
+/aws/botocore/
+/aws/six-1.11.0.dist-info/
+/aws/boto3-1.5.6.dist-info/
+/aws/futures-3.2.0.dist-info/
+/aws/docutils-0.14.dist-info/
+/aws/botocore-1.8.20.dist-info/
+/aws/python_dateutil-2.6.1.dist-info/
+/aws/concurrent/
+/aws/jmespath/
+/aws/dateutil/
+/aws/s3transfer/
+/aws/jmespath-0.9.3.dist-info/
+/aws/boto3/
+/aws/docutils/
+/active_directory/node_modules/

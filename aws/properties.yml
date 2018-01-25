@@ -1,0 +1,4 @@
+# AWS NW configure => has to be build
+aws_region: us-east-2
+aws_accountid: 668385047392
+role_name: LambdaSOXListUsers

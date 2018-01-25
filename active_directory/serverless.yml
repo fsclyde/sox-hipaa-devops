@@ -1,0 +1,46 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+service: act
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+# frameworkVersion: "=X.X.X"
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+
+# you can overwrite defaults here
+  stage: dev
+  region: us-east-1
+
+# Function for AD users
+functions:
+  hello:
+    handler: handler.myHandler
+    name: nwADusers
+    description: audit Active directory users
+    runtime: nodejs6.10
+    memorySize: 1024
+    timeout: 300
+    environment:
+      USERNAME: ${file(properties.yml):username}
+      PASSWORD: ${file(properties.yml):password}
+    tags:
+      Environment: build
+      Owner: Clyde Fondop
+      Application: ActiveDirectory
+      Platform: newnewwave
+    region: ${file(properties.yml):aws_region}
+    awsKmsKeyArn: arn:aws:kms:${file(properties.yml):aws_region}:${file(properties.yml):aws_accountid}:key/${file(properties.yml):kms_key_id}
