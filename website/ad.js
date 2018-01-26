@@ -4,7 +4,7 @@ function getADUsers(title) {
 
     var admins = `https://s3.amazonaws.com/newwave-sox-kwjer3209/active_directory/corp-int-newwave-${title}.json`
 
-    $.getJSON(admins, function(result, admins) {
+    $.getJSON(admins, function(result) {
         formatTable(result);
     });
 
@@ -37,13 +37,13 @@ function formatTable(data) {
         tr.appendChild(th);
     }
 
-    // ADD JSON DATA TO THE TABLE AS ROWS.
+ // ADD JSON DATA TO THE TABLE AS ROWS.
     for (var i = 0; i < myBooks.length; i++) {
 
         tr = table.insertRow(-1);
 
         for (var j = 0; j < col.length; j++) {
-            var tabCell = tr.insertCells(-1);
+            var tabCell = tr.insertCell(-1);
             tabCell.innerHTML = myBooks[i][col[j]];
         }
     }
