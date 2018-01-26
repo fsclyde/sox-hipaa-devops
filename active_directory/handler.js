@@ -9,7 +9,6 @@ Description     : This will allows use to get the list of Active AD users
 const aws = require('aws-sdk'), fs = require('fs');
 const s3 = new aws.S3();
 const config = require('./config.json');
-const decryptEnvVars = require('aws-kms-decrypt-env');
 
 // Environment variable
 const encrypted = {
@@ -62,7 +61,6 @@ function uploads3(fileToUpload, dataToUpload){
 
 /// Main function
 function processEvent(event, context, callback) {
-
 
      // Define AD parameters
      var configLDAP = { url: config.ldapUrl,

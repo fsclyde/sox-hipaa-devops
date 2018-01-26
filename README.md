@@ -1,10 +1,10 @@
 # sox-github-perms
 Extract Github permissions users and members for SOX report
 
-    pip install --user requests
+    - Jenkins Users allows to promote code
+    - Github Users and Admins
+    - Github Repository Admins and permissions
+    - Active Directory Users and Admins
 
-    export USERNAME=""
-    export PASSWORD=""
 
 
-This script will run every week on Monday and push the informations into slack.

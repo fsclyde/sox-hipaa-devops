@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="style.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="script.js"></script>
+    <script src="ad.js"></script>
 </head>
 <body onload="CreateTableFromJSON()">
 
@@ -24,12 +25,15 @@
   <button onclick="myFunction()" class="dropbtn">SOX Reports</button>  <button class="dropbtn" onclick="window.location.href='http://github.nw.adesa.com/clyde-fondop/sox-github-perms'">Reports Tools</button>
  <button onclick="window.location.href='https://s3.amazonaws.com/newwave-sox-kwjer3209/scripts/github_permission.py'" class="dropbtn">Script</button>
   <div id="myDropdown" class="dropdown-content">
-    <option onclick="gets3JSON('RepositoryAccessReport','repositories_permission')" value="prod">Github: Repository Permissions</option>
-    <option onclick="gets3JSON('UsersAccessRepoReport','users_permission')" value="uat">Github: Users Access</option>
-      <option onclick="window.location.href='http://jenkins-tesla.nw.adesa.com/job/sox-listofusers/'" value="uat">Jenkins: Promoting Users</option>
+    <option onclick="gets3JSON('RepositoryAccessReport','repositories_permission')" >Github: Repository Permissions</option>
+    <option onclick="gets3JSON('UsersAccessRepoReport','users_permission')" >Github: Users Access</option>
+      <option onclick="window.location.href='http://jenkins-tesla.nw.adesa.com/job/sox-listofusers/'" >Jenkins: Promoting Users</option>
+      <option onclick="getADUsers('admins')" >Active Directory: New Wave - Admins </option>
+      <option onclick="getADUsers('users')" >Active Directory: New Wave - Users </option>
+
   </div>
 
-<div id="showData"></div>
+    <div id="showData"></div>
 
 </div>
 </body>
