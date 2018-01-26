@@ -14,6 +14,15 @@ function formatTable(data) {
 
     var myBooks = data
 
+    // Filter Unwanted Value
+    myBooks = myBooks.filter(function( obj ) {
+        var hiddenValue = ["pwdLastSet","userAccountControl","employeeID","sn","cn","givenName","displayName","description"];
+        for (row in hiddenValue) {
+            delete obj[hiddenValue[row]]
+        }
+        return obj;
+    });
+
     // EXTRACT VALUE FOR HTML HEADER.
     var col = [];
     for (var i = 0; i < myBooks.length; i++) {
