@@ -69,6 +69,8 @@ function processEvent(event, context, callback) {
                password: decrypted.password
               }
     const ad = new ActiveDirectory(configLDAP);
+
+
     var adminsGroup = config.adminsGroup;
     var usersGroup = config.usersGroup;
 
@@ -82,29 +84,35 @@ function processEvent(event, context, callback) {
 
 }
 
-
 // Lambda handler
 exports.myHandler = function(event, context, callback) {
- if ( decrypted.username && decrypted.password ) {
-            processEvent(event, context, callback);
-        } else {
-            const kms = new aws.KMS({region:"us-east-1"});
 
-            const decryptPromises = [
-                kms.decrypt( { CiphertextBlob: new Buffer(encrypted.username, 'base64') } ).promise(),
-                kms.decrypt( { CiphertextBlob: new Buffer(encrypted.password, 'base64') } ).promise()
-            ];
-
-            Promise.all( decryptPromises ).then( data => {
-                decrypted.username = data[0].Plaintext.toString('ascii');
-                decrypted.password = data[1].Plaintext.toString('ascii');
-
+ try {
+     if ( decrypted.username && decrypted.password ) {
                 processEvent(event, context, callback);
-            }).catch( err => {
-                console.log('Decrypt error:', err);
-                return callback(err);
-            });
+            } else {
+                const kms = new aws.KMS({region:"us-east-1"});
+
+                const decryptPromises = [
+                    kms.decrypt( { CiphertextBlob: new Buffer(encrypted.username, 'base64') } ).promise(),
+                    kms.decrypt( { CiphertextBlob: new Buffer(encrypted.password, 'base64') } ).promise()
+                ];
+
+                Promise.all( decryptPromises ).then( data => {
+                    decrypted.username = data[0].Plaintext.toString('ascii');
+                    decrypted.password = data[1].Plaintext.toString('ascii');
+
+                    processEvent(event, context, callback);
+                }).catch( err => {
+                    console.log('Decrypt error:', err);
+                    return callback(err);
+                });
+            }
+    } catch (e){
+        if (e instanceof TypeError) {
+            console.log("Please provide encrypted username and password variables USERNAME & PASSWORD")
         }
+    }
 }
 
 

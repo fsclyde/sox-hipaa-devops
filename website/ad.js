@@ -18,7 +18,7 @@ function formatTable(data) {
     myBooks = myBooks.filter(function( obj ) {
         var hiddenValue = ["pwdLastSet","userAccountControl","employeeID","sn","cn","givenName","displayName","description"];
         for (row in hiddenValue) {
-            delete obj[hiddenValue[row]]
+            delete obj[hiddenValue[row]];
         }
         return obj;
     });
@@ -61,4 +61,10 @@ function formatTable(data) {
     var divContainer = document.getElementById("showData");
     divContainer.innerHTML = "";
     divContainer.appendChild(table);
+
+    // Update Last updated date
+//    var d = new Date();
+//    var dateStr = d.toISOString();
+//    var divContainerDate = document.getElementById("showLastUpdatedFileDate");
+//    divContainerDate.innerHTML = "Last Updated: " + dateStr;
 }

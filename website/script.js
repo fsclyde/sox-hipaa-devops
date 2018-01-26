@@ -98,6 +98,12 @@ function CreateTableFromJSON(data) {
     var divContainer = document.getElementById("showData");
     divContainer.innerHTML = "";
     divContainer.appendChild(table);
+
+    // Update Last updated date
+//    var d = new Date();
+//    var dateStr = d.toISOString();
+//    var divContainerDate = document.getElementById("showLastUpdatedFileDate");
+//    divContainerDate.innerHTML = "Last Updated: " + dateStr;
 }
 
 
