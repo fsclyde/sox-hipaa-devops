@@ -23,14 +23,14 @@ provider:
 
 # you can overwrite defaults here
   stage: dev
-  region: us-east-2
+  region: ${file(properties.yml):aws_region}
 
 # Function for AD users
 functions:
-  hello:
+  nwADusers:
     handler: handler.myHandler
     name: nwADusers
-    description: SOX audit Active directory users
+    description:
     runtime: nodejs6.10
     memorySize: 1024
     timeout: 300
@@ -44,3 +44,9 @@ functions:
       Platform: newwave
     region: ${file(properties.yml):aws_region}
     awsKmsKeyArn: arn:aws:kms:${file(properties.yml):aws_region}:${file(properties.yml):aws_accountid}:key/${file(properties.yml):kms_key_id}
+    vpc:
+      securityGroupIds:
+        - ${file(properties.yml):aws-lambda-sg}
+      subnetIds:
+        - ${file(properties.yml):aws-lambda-subnet1}
+        - ${file(properties.yml):aws-lambda-subnet2}
