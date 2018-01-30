@@ -55,7 +55,7 @@ function uploads3(fileToUpload, dataToUpload){
         Body: JSON.stringify(dataToUpload),
         ACL: 'public-read'
       },function (resp) {
-        console.log('Successfully uploaded package.');
+        console.log('Successfully uploaded package: ' + fileToUpload);
       });
 }
 
@@ -104,8 +104,8 @@ exports.myHandler = function(event, context, callback) {
 
                     processEvent(event, context, callback);
                 }).catch( err => {
-                    console.log('Decrypt error:', err);
-                    return callback(err);
+                    console.log("Error when trying to decrypt the object: Check AWS Access Keys");
+                    return;
                 });
             }
     } catch (e){
