@@ -7,7 +7,11 @@ aws_region_build: us-east-1
 
 # AWS Dev Account
 aws_accountid: 854045450972
-aws_region: us-east-2
-username:
-password:
-kms_key_id: 6931741c-9efb-4be5-b4c5-1913a492212d
+aws_region: us-east-1
+username: AQICAHjjBKYaKAgFQxgrQPU/6U1hSfKXyFbs1pAt/kPRbpMBfgEy55+GrLuY2gl2mDxCcysiAAAAbjBsBgkqhkiG9w0BBwagXzBdAgEAMFgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM03l/p786PGVP0qmlAgEQgCvuRnV6pGMyQt0umPnKcxy6R9F2pn6yq/FywTQVnbFgUC1LSiIroAKp6aYq
+password: AQICAHjjBKYaKAgFQxgrQPU/6U1hSfKXyFbs1pAt/kPRbpMBfgH0+ntr0/70Ehn8WFEu1TpQAAAAajBoBgkqhkiG9w0BBwagWzBZAgEAMFQGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMrgZ4q6ZoD9PTTEqDAgEQgCdBeT4zvLO6SSBQ0rTGy3gMD/iKCNFRl5GDDTnp/3X9VRYe0Yk2EB0=
+kms_key_id: 0847e5bf-2548-4375-8521-ff20d55df813
+aws-lambda-sg: sg-e9961795
+aws-lambda-sg2: sg-9bbeade7
+aws-lambda-subnet1: subnet-2da9d364
+aws-lambda-subnet2: subnet-2aa9d363
