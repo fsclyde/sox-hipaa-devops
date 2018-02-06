@@ -16,7 +16,7 @@ function formatTable(data) {
 
     // Filter Unwanted Value
     myBooks = myBooks.filter(function( obj ) {
-        var hiddenValue = ["pwdLastSet","userAccountControl","employeeID","sn","cn","givenName","displayName","description"];
+        var hiddenValue = ["pwdLastSet","userAccountControl","employeeID","sn","cn","givenName","displayName","dn","mail", "lockoutTime","whenCreated","initials"];
         for (row in hiddenValue) {
             delete obj[hiddenValue[row]];
         }
