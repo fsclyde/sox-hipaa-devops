@@ -90,6 +90,7 @@ class functionRepo:
         for item in json_res:
             if re.search(item["name"], team_name, re.IGNORECASE):
                 team_id = item["id"]
+                print(team_id)
 
         return team_id
 
