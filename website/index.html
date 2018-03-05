@@ -32,10 +32,11 @@
   <div id="myDropdown" class="dropdown-content">
     <option onclick="gets3JSON('RepositoryAccessReport','repositories_permission')" >Github: Repository Permissions</option>
     <option onclick="gets3JSON('UsersAccessRepoReport','users_permission')" >Github: Users Access</option>
-      <option onclick="window.location.href='http://jenkins-tesla.nw.adesa.com/job/sox-listofusers/'" >Jenkins: Promoting Users</option>
+      <option onclick="getJenkinsUsers()" >Jenkins: Promoting Users</option>
       <option onclick="getADUsers()" >Active Directory: New Wave - Users </option>
       <option onclick="getAWSAwdmins()" >AWS: New Wave - Admins </option>
       <option onclick="getDBUsers()" >RDS Production Database: New Wave - Users </option>
+      <option onclick="getDBUsersActivities()" >RDS Production Database: Monitoring - Users Activities </option>
 
   </div>
 

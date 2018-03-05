@@ -1,3 +1,11 @@
+// Get Jenkins users
+function getJenkinsUsers(){
+    var jenkins_users = `https://s3.amazonaws.com/newwave-sox-kwjer3209/deployment_users/jenkins_users_permissions.json`
+        $.getJSON(jenkins_users, function(results) {
+        formatTable(results);
+    });
+}
+
 // Get AWS Admins users
 function  getAWSAwdmins(){
     var aws_admins = `https://s3.amazonaws.com/newwave-sox-kwjer3209/active_directory/aws_admins_users.json`
@@ -8,7 +16,15 @@ function  getAWSAwdmins(){
 
 // get db production  users
 function getDBUsers() {
-    var aws_admins = `https://s3.amazonaws.com/newwave-sox-kwjer3209/database/fetch-user-permission.json`
+    var db_admins = `https://s3.amazonaws.com/newwave-sox-kwjer3209/database/fetch-user-permission.json`
+        $.getJSON(db_admins, function(results) {
+        formatTable(results);
+    });
+}
+
+// Production Users Activities
+function getDBUsersActivities() {
+    var aws_admins = `https://s3.amazonaws.com/newwave-sox-kwjer3209/database/fetch-user-activities.json`
         $.getJSON(aws_admins, function(results) {
         formatTable(results);
     });

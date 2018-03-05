@@ -81,12 +81,29 @@ function processEvent(event, context, callback) {
            // upload to JSON s3
            uploads3("database/fetch-user-permission.json",data)
           }
-          client.end()
         })
         // Upload the script itself to s3
         fs.readFile('handler_database.js', 'utf8', function(err, data_file) {
             uploads3("scripts/handler_database.js", data_file)
         });
+
+        // Monitoring users Activities in the Production database
+       const query_activities = {
+        //  Prepared statement
+        name: 'fetch-user-activities',
+        text: util.format("select datid, datname, pid, usesysid, usename, client_addr, client_port, backend_start, query_start, state_change, query from pg_stat_activity limit 100")
+       }
+
+       client.query(query_activities, (err, res) => {
+          if (err) {
+            console.log(err.stack)
+          } else {
+            var data = res.rows
+           // upload to JSON s3
+           uploads3("database/fetch-user-activities.json",data)
+          }
+          client.end()
+        })
     }
    // Extract permission per database
 //   databases.forEach(function(db) {
