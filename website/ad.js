@@ -1,18 +1,75 @@
+// Get Jenkins users
+function getJenkinsUsers(){
+    var jenkins_users = `https://s3.amazonaws.com/newwave-sox-kwjer3209/deployment_users/jenkins_users_permissions.json`
+        $.getJSON(jenkins_users, function(results) {
+        formatTable(results);
+    });
+}
+
+// Get AWS Admins users
+function  getAWSAwdmins(){
+    var aws_admins = `https://s3.amazonaws.com/newwave-sox-kwjer3209/active_directory/aws_admins_users.json`
+        $.getJSON(aws_admins, function(results) {
+        formatTable(results);
+    });
+}
+
+// get db production  users
+function getDBUsers() {
+    var db_admins = `https://s3.amazonaws.com/newwave-sox-kwjer3209/database/fetch-user-permission.json`
+        $.getJSON(db_admins, function(results) {
+        formatTable(results);
+    });
+}
+
+// Production Users Activities
+function getDBUsersActivities() {
+    var aws_admins = `https://s3.amazonaws.com/newwave-sox-kwjer3209/database/fetch-user-activities.json`
+        $.getJSON(aws_admins, function(results) {
+        formatTable(results);
+    });
+}
+
+// IsAdmins status
+function getAdmins(data, status){
+    updated_data = [];
+    for (var row in data) {
+        data[row].AWSadmin = status
+        updated_data.push(data[row])
+    }
+    return updated_data;
+}
 
 // Retrieve the last updated list of Active Directory New Wave Users
-function getADUsers(title) {
+function getADUsers() {
+    var myData = [];
+    var admins = `https://s3.amazonaws.com/newwave-sox-kwjer3209/active_directory/corp-int-newwave-admins.json`
+    var users = `https://s3.amazonaws.com/newwave-sox-kwjer3209/active_directory/corp-int-newwave-users.json`
+    var github = `https://s3.amazonaws.com/newwave-sox-kwjer3209/users_permission/UsersAccessRepoReport.json`
 
-    var admins = `https://s3.amazonaws.com/newwave-sox-kwjer3209/active_directory/corp-int-newwave-${title}.json`
-
-    $.getJSON(admins, function(result) {
+    $.when(
+        $.getJSON(admins, function(results) {
+            adminsData = results
+            adminsData = getAdmins(adminsData, true)
+        }),
+        $.getJSON(users, function(results) {
+            usersData = results
+            usersData = getAdmins(usersData, false)
+        }),
+        $.getJSON(github, function(results) {
+            githubData = results
+            console.log(githubData);
+        })
+    ).then(function() {
+        var result = [];
+        $.extend(result, usersData, adminsData);
         formatTable(result);
     });
-
 }
 
 function formatTable(data) {
 
-    var myBooks = data
+    var myBooks = data;
 
     // Filter Unwanted Value
     myBooks = myBooks.filter(function( obj ) {
@@ -37,7 +94,6 @@ function formatTable(data) {
     var table = document.createElement("table");
 
     // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
-
     var tr = table.insertRow(-1);                   // TABLE ROW.
 
     for (var i = 0; i < col.length; i++) {
@@ -54,6 +110,8 @@ function formatTable(data) {
         for (var j = 0; j < col.length; j++) {
             var tabCell = tr.insertCell(-1);
             tabCell.innerHTML = myBooks[i][col[j]];
+
+
         }
     }
 

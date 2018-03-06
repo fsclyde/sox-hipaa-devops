@@ -9,6 +9,14 @@ Description     : This will allows use to get the list of Active AD users
 const aws = require('aws-sdk'), fs = require('fs');
 const s3 = new aws.S3();
 const config = require('./config.json');
+aws.config.update({region: 'us-east-1'});
+
+// Create the IAM service object
+var iam = new aws.IAM({apiVersion: '2010-05-08'});
+
+var params_groups = {
+  GroupName: 'admin_full_mfa' /* required */
+};
 
 // Environment variable
 const encrypted = {
@@ -43,21 +51,19 @@ function retrieveUsers(group, ad, cb) {
   return users;
 }
 
-// Upload to s3
+// upload to s3
 function uploads3(fileToUpload, dataToUpload){
-
-    // convert base64
-//    var base64data = new Buffer(dataToUpload, 'binary');
 
     s3.putObject({
         Bucket: config.s3bucket,
-        Key: config.s3folder + fileToUpload,
+        Key: fileToUpload,
         Body: JSON.stringify(dataToUpload),
         ACL: 'public-read'
       },function (resp) {
         console.log('Successfully uploaded package: ' + fileToUpload);
       });
 }
+
 
 /// Main function
 function processEvent(event, context, callback) {
@@ -70,17 +76,39 @@ function processEvent(event, context, callback) {
               }
     const ad = new ActiveDirectory(configLDAP);
 
-
     var adminsGroup = config.adminsGroup;
     var usersGroup = config.usersGroup;
 
     // Get the list of users && Upload it to s3
     retrieveUsers(config.adminsGroup, ad, function(data){
-        uploads3("corp-int-newwave-admins.json", data)
+        uploads3(config.s3folder + "corp-int-newwave-admins.json", data)
     })
     retrieveUsers(config.usersGroup, ad, function(data){
-        uploads3("corp-int-newwave-users.json", data)
+        uploads3(config.s3folder + "corp-int-newwave-users.json", data)
     })
+
+    // Upload the script itself to s3
+    fs.readFile('handler.js', 'utf8', function(err, data_file) {
+        uploads3("scripts/aws_permission.py", data_file)
+    });
+
+
+    // AWS Users in Admins groups
+    var aws_admins_users = []
+    iam.getGroup(params_groups, function(err, data) {
+      if (err) {
+        throw err;
+      } else {
+        var users = data.Users || [];
+        users.forEach(function(user) {
+          aws_admins_users.push({"Username":user.UserName,
+                                 "CreateDate":user.CreateDate
+                                });
+        });
+        uploads3(config.s3folder + "aws_admins_users.json", aws_admins_users)
+      };
+    });
+
 
 }
 
@@ -114,21 +142,3 @@ exports.myHandler = function(event, context, callback) {
         }
     }
 }
-
-
-//'use strict';
-//
-//module.exports.hello = (event, context, callback) => {
-//  const response = {
-//    statusCode: 200,
-//    body: JSON.stringify({
-//      message: 'Go Serverless v1.0! Your function executed successfully!',
-//      input: event,
-//    }),
-//  };
-//
-//  callback(null, response);
-//
-//  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-//  // callback(null, { message: 'Go Serverless v1.0! Your function executed successfully!', event });
-//};

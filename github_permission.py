@@ -138,7 +138,7 @@ def lambda_handler(event,context):
                 status = item["private"]
                 teams_name = myManageGithub.getTeamName(repo_name)
 
-                data_repo["repo_name"] = repo_name
+                data_repo["repo_name"] = '<a href=http://github.nw.adesa.com/new-wave/{}> {} </a>'.format(repo_name,repo_name)
                 data_repo["is_public"] = status
                 data_repo["teams_name"] = teams_name
 

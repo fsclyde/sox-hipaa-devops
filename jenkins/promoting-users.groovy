@@ -6,6 +6,17 @@ import jenkins.*
 import jenkins.model.*
 import hudson.*
 import com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy
+import groovy.json.JsonOutput
+
+// Groovy helps http://grails.asia/groovy-each-examples
+// upload file to s3 groovy https://gist.github.com/atomsfat/6273637
+
+
+// @GrabResolver(name='jets3t', root='http://www.jets3t.org/maven2', m2Compatible='true')
+// @Grab(group='net.java.dev.jets3t', module='jets3t', version='0.9.0')
+// import org.jets3t.service.impl.rest.httpclient.RestS3Service
+// import org.jets3t.service.security.AWSCredentials
+// import org.jets3t.service.model.*
 
 
 instance = Jenkins.getInstance()
@@ -30,11 +41,42 @@ if(authStrategy instanceof RoleBasedAuthorizationStrategy){
 
    usersPermissionsMatrix["roles"] = roles
    users.each{ user ->
-      usersPermissionsMatrix[user] = roles.inject([]){ list, role ->
-         list << permissionsByUser[user].contains(role)
+      usersPermissionsMatrix[user] = roles.inject([]){ list, role -> list << permissionsByUser[user].contains(role)
       }
+
    }
-println export(usersPermissionsMatrix,csv)
+def data = export(usersPermissionsMatrix,csv)
+
+// the maximum number of rows that will be converted, if 0 then all rows will be converted
+Integer maxNumberOfRows = new Integer(0)
+
+// the separator used for splitting the csv columns
+String separator =  ","
+
+def dataList = []
+def lineCounter = 0
+def headers = []
+data.each() { line ->
+    // skip the header; header is line 1
+    if(maxNumberOfRows == 0 || lineCounter <= maxNumberOfRows) {
+        if (lineCounter == 0) {
+            headers = line.split(separator).collect{it.trim()}.collect{it.toLowerCase()}
+        } else {
+            def dataItem = [:]
+            def row = line.split(separator).collect{it.trim()}.collect{it.toLowerCase()}
+
+            headers.eachWithIndex() { header, index ->
+                dataItem.put("${header}", "${row[index]}")
+            }
+            dataList.add(dataItem)
+        }
+
+    }
+    lineCounter = lineCounter + 1
+}
+
+String output = JsonOutput.toJson(dataList)
+
 
 }else{
    println "Not able to list the permissions by user"
