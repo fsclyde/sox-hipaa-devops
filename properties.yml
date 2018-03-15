@@ -1,10 +1,9 @@
 
 # Your username and password for github
-username: AQICAHjjBKYaKAgFQxgrQPU/6U1hSfKXyFbs1pAt/kPRbpMBfgEC5rrVVDpr6iuPKytUVWCTAAAAbjBsBgkqhkiG9w0BBwagXzBdAgEAMFgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMxYgwB7tdF1edU8x8AgEQgCuPFDCYdNMMHefzlCqXWFPwRNK8I3JTVLg68qsQGh3m70rjRh4DmvidbO3x
-password: AQICAHjjBKYaKAgFQxgrQPU/6U1hSfKXyFbs1pAt/kPRbpMBfgENQk30/nqeCZffEAWd48dSAAAAbjBsBgkqhkiG9w0BBwagXzBdAgEAMFgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMmF8SgTHwGfyt0OwBAgEQgCuS+i3qMcx0Ea2lkazyT/jeONjsMdyke72VPOfoUVrIukeO/4SwV9CKy7tJ
-api_token: AQICAHjjBKYaKAgFQxgrQPU/6U1hSfKXyFbs1pAt/kPRbpMBfgHB3le8R/y4xw0+MOYfLA2YAAAArjCBqwYJKoZIhvcNAQcGoIGdMIGaAgEAMIGUBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDJsxPpJTXF3r9SKymAIBEIBnN/Oyr/1wSf8S8fBSHJb+pkdfHEWZOrY2+g03vaMK5ps/i4cwnIUEcUv5g72aqWPGtotmtypVBUWusEmJC3/7/gvxcI+XGtVL3FElHQNM1U/Rzhel41gFk+K3C3TO0CH+Ql+VCSv/GA==
-aws_access_key_pr:
-aws_secret_key_pr:
+username: []
+password: []
+api_token: []
+
 
 # AWS NW configure => has to be build
 aws_region: us-east-1
