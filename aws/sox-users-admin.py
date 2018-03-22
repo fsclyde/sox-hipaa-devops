@@ -8,10 +8,12 @@ from datetime import timedelta
 s3r = boto3.resource('s3')
 s3 = boto3.client('s3')
 
-BUCKET_NAME = "newwave-sox-kwjer3209"
+BUCKET_NAME = "[Bucket Name]"
+USERS_FILE = "aws_users/aws_production_users.json"
 mybucket = s3r.Bucket(BUCKET_NAME)
 
-client = boto3.client('iam',aws_access_key_id="XXX",aws_secret_access_key="XXX")
+#client = boto3.client('iam',aws_access_key_id="XXX",aws_secret_access_key="XXX")
+client = boto3.client('iam')
 users = client.list_users()
 user_list = []
 
@@ -57,7 +59,7 @@ def lambda_handler(event,context):
         json_aws_users.append(key)
 
     # print(json.dumps(json_aws_users))
-    putObject(json_aws_users,"aws_users/aws_production_users.json")
+    putObject(json_aws_users,"{}".format(USERS_FILE))
 
 # Function upload for the new file to s3 bucket
 def putObject(data, key_name):

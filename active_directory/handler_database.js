@@ -14,7 +14,8 @@ const config = require('./config.json');
 var util = require('util');
 
 
-const databases = ["nw_watchlist", "nw_iam", "nw_ci","nw_vdp","nw_liveblock","nw_inspection","nw_media","nw_inventory","nw_announcements"];
+const databases = [""];
+const single_database = "";
 
 const encrypted = {
     username: process.env['RDS_USERNAME'],
@@ -61,7 +62,7 @@ function initiatRdsConnection(username, password, db){
 /// Main function
 function processEvent(event, context, callback) {
 
-    var client = initiatRdsConnection(decrypted.username, decrypted.password, "nw_watchlist")
+    var client = initiatRdsConnection(decrypted.username, decrypted.password, single_database)
 
     // if successfully connected
     if (client){

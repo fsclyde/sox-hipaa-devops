@@ -1,23 +1,23 @@
 # Your username and password for github
-username_build: AQICAHgE5I/24a6039bqkk7RuckqwLikLikGtewobseXNUdy2wGQeQOD+lmxjLhQaHi2FrqXAAAAbjBsBgkqhkiG9w0BBwagXzBdAgEAMFgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM9049HFyh2zr14wz/AgEQgCuyAHA3l73/GWkpAniWw8VtGBATvFr0RUEUXut8ztlzSCoYTA7kPOWyIKPc
-password_build: AQICAHgE5I/24a6039bqkk7RuckqwLikLikGtewobseXNUdy2wHBwpGmfh6i/UCL/Nd1s9UzAAAAbjBsBgkqhkiG9w0BBwagXzBdAgEAMFgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM0rQYnutpMYTQd6rvAgEQgCuqoXciEnM/hb6s0hFhqTy72RJtBeOeu4yMcolb4T/9Zf42OfYPhD6ShZVL
-kms_key_id_build: c713a2b4-925a-40d1-bde1-fbd7bddccf1c
-aws_accountid_build: 610713616533
+username_build: []
+password_build: []
+kms_key_id_build: []
+aws_accountid_build: []
 aws_region_build: us-east-1
 
 # AWS Dev Account
-aws_accountid: 854045450972
+aws_accountid: []
 aws_region: us-east-1
-username: AQICAHjjBKYaKAgFQxgrQPU/6U1hSfKXyFbs1pAt/kPRbpMBfgEy55+GrLuY2gl2mDxCcysiAAAAbjBsBgkqhkiG9w0BBwagXzBdAgEAMFgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM03l/p786PGVP0qmlAgEQgCvuRnV6pGMyQt0umPnKcxy6R9F2pn6yq/FywTQVnbFgUC1LSiIroAKp6aYq
-password: AQICAHjjBKYaKAgFQxgrQPU/6U1hSfKXyFbs1pAt/kPRbpMBfgH0+ntr0/70Ehn8WFEu1TpQAAAAajBoBgkqhkiG9w0BBwagWzBZAgEAMFQGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMrgZ4q6ZoD9PTTEqDAgEQgCdBeT4zvLO6SSBQ0rTGy3gMD/iKCNFRl5GDDTnp/3X9VRYe0Yk2EB0=
-kms_key_id: 0847e5bf-2548-4375-8521-ff20d55df813
-aws-lambda-sg: sg-e9961795
-aws-lambda-sg2: sg-9bbeade7
-aws-lambda-subnet1: subnet-2da9d364
-aws-lambda-subnet2: subnet-2aa9d363
+username: []
+password: []
+kms_key_id: []
+aws-lambda-sg: []
+aws-lambda-sg2: []
+aws-lambda-subnet1: []
+aws-lambda-subnet2: []
 
 # RDS  Information Production Environment
-rds_username: AQICAHjjBKYaKAgFQxgrQPU/6U1hSfKXyFbs1pAt/kPRbpMBfgFlXwthuAwoac0PhZp7csGMAAAAZjBkBgkqhkiG9w0BBwagVzBVAgEAMFAGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMFRdKl0NGW7QhwRnZAgEQgCO181ss1rRThKnnrnVR3w7xZIyhF1iuxiHrpoz4ZcBjGKcf4A==
-rds_password: AQICAHjjBKYaKAgFQxgrQPU/6U1hSfKXyFbs1pAt/kPRbpMBfgEHtmfq8LQtz4MfKA921qO9AAAAdDByBgkqhkiG9w0BBwagZTBjAgEAMF4GCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMezVqEioeykgb9h7PAgEQgDHV6wq2obOsrpupBPcy7aIu1/gUTnxjaZEMhyL9B3aHLinclKl+NZmALzNPLn/112+c
-rds_host: nw.cfcvmsak4l0d.us-east-2.rds.amazonaws.com
+rds_username: []
+rds_password: []
+rds_host: []
 

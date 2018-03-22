@@ -22,5 +22,12 @@ except ClientError as e:
         sys.exit(1)
 
 
-GITHUB_API_URL = "http://github.nw.adesa.com/api/v3/{}"
-GITHUB_ORGANISATION = "new-wave"
+GITHUB_API_URL = "[GITHUB URL]/api/v3/{}"
+GITHUB_ORGANISATION = "[ORGANISATION NAME]"
+BUCKET_NAME = "[BUCKET NAME]"
+GITHUB_URL = "[GITHUB URL]"
+USERS_PERM_FILE = "users_permission/UsersAccessRepoReport.json"
+REPOS_PERM_FILE =  "repositories_permission/RepositoryAccessReport.json"
+SC_SCRIPT = "github_permission.py"
+SC_SCRIPT_DIR = "script/"
+SLACK_CHANNEL = "#githubot"

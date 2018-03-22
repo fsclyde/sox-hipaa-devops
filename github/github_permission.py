@@ -16,7 +16,7 @@ from datetime import timedelta
 s3r = boto3.resource('s3')
 s3 = boto3.client('s3')
 
-BUCKET_NAME = "newwave-sox-kwjer3209"
+
 mybucket = s3r.Bucket(BUCKET_NAME)
 
 #
@@ -95,7 +95,7 @@ class manageGithub:
         payload = {
             "filename": filename,
             "token": config.API_TOKEN,
-            "channels": ['#githubot'],
+            "channels": ['{}'.format(SLACK_CHANNEL)],
         }
 
         r = requests.post("https://slack.com/api/files.upload", params=payload, files=my_file)
@@ -138,7 +138,7 @@ def lambda_handler(event,context):
                 status = item["private"]
                 teams_name = myManageGithub.getTeamName(repo_name)
 
-                data_repo["repo_name"] = '<a href=http://github.nw.adesa.com/new-wave/{}> {} </a>'.format(repo_name,repo_name)
+                data_repo["repo_name"] = '<a href={}/{}/{}> {} </a>'.format(GITHUB_URL,GITHUB_ORGANISATION,repo_name,repo_name)
                 data_repo["is_public"] = status
                 data_repo["teams_name"] = teams_name
 
@@ -149,18 +149,18 @@ def lambda_handler(event,context):
     data_team = myManageGithub.getTeamNameStand()
 
     # Team Access
-    filename = "users_permission/UsersAccessRepoReport.json"
+    filename = USERS_PERM_FILE
     putObject(data_team, filename)
 
     # Repo Access
-    filename = "repositories_permission/RepositoryAccessReport.json"
+    filename = REPOS_PERM_FILE
     putObject(tab_repo, filename)
 
     # Script That has created the reports
-    filename = "github_permission.py"
+    filename = SC_SCRIPT
     f = open(filename, "r")
     data_file = f.read()
-    putObject(data_file, "scripts/"+filename)
+    putObject(data_file, "{}".format(SC_SCRIPT_DIR)+filename)
 
 
 if __name__ == "__main__":

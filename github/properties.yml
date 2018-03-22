@@ -1,0 +1,15 @@
+
+# Your username and password for github
+username: []
+password: []
+api_token: []
+
+
+# AWS NW configure => has to be build
+aws_region: []
+kms_key_id: []
+aws_accountid: []
+aws-lambda-sg: []
+aws-lambda-sg2: []
+aws-lambda-subnet1: []
+aws-lambda-subnet2: []

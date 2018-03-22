@@ -1,9 +1,9 @@
 {
-    "ldapUrl" : "ldap://ldap-pdc.adesa.com",
-    "ldapBaseDN" : "dc=adesa,dc=com",
-    "adminsGroup" : "corp-int-newwave-admins",
-    "usersGroup" : "corp-int-newwave-users",
-    "s3bucket" : "newwave-sox-kwjer3209",
-    "s3folder" : "active_directory/",
-    "kmsKey" : "c713a2b4-925a-40d1-bde1-fbd7bddccf1c"
+    "ldapUrl" : "",
+    "ldapBaseDN" : "",
+    "adminsGroup" : "",
+    "usersGroup" : "",
+    "s3bucket" : "",
+    "s3folder" : "",
+    "kmsKey" : ""
 }
