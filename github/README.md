@@ -11,4 +11,4 @@ This tool allows the extraction of github users permissions and github repositor
     pip install boto3 requests --user
 
 
-![ SOX Repository Permission ](https://github.com/fsclyde/sox-github-perms/blob/master/images/repository.png "Repository")
+![ SOX Repository Permission ](https://github.com/fsclyde/sox-hipaa-devops/blob/master/images/repository.png "Repository")

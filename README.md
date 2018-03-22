@@ -3,7 +3,8 @@
 Sox is a standards that allows companies provide Auditing Accountability, Responsibility, and Transparency on their assets. See more informations [ here ](https://en.wikipedia.org/wiki/Sarbanes%E2%80%93Oxley_Act)
 This repository is a list of tools that allow the extraction of some main control of the SOX requirements.
 
-The main objectif of this is to ensure that all SOX requirements are provided to the auditor using the Agile / Devops Framework. SOX requirements can be extracted directly from the CI/CD. More informations [ here ] (https://insights.sei.cmu.edu/devops/2015/09/-a-devops-a-day-keeps-the-auditors-away-and-helps-organizations-stay-in-compliance-with-federal-regu.html)
+The main objectif of this is to ensure that all SOX requirements are provided to the auditor using the Agile / Devops Framework. SOX requirements can be extracted directly from the CI/CD.
+More informations [ here ](https://insights.sei.cmu.edu/devops/2015/09/-a-devops-a-day-keeps-the-auditors-away-and-helps-organizations-stay-in-compliance-with-federal-regu.html)
 
 ### design of the approach
 
