@@ -8,7 +8,7 @@ More informations [ here ](https://insights.sei.cmu.edu/devops/2015/09/-a-devops
 
 ### design of the approach
 
-![ SOX CI/CD ](https://github.com/fsclyde/sox-hipaa-devops/blob/master/images/soc_ci-cd.png "SOX")
+![ SOX CI/CD ](https://github.com/fsclyde/sox-hipaa-devops/blob/master/images/sox_ci-cd.png "SOX")
 
 ### Source Code
 
