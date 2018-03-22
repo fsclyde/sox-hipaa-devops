@@ -21,4 +21,4 @@ This Script generate a SOX report for Admins permissions on the specific element
     npm install aws-sdk --save
 
 
-![ SOX Database Monitoring  ](https://github.com/fsclyde/sox-github-perms/blob/master/images/monitoring.png "Database")
+![ SOX Database Monitoring  ](https://github.com/fsclyde/sox-hipaa-devops/blob/master/images/monitoring.png "Database")

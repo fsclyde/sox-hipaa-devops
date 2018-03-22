@@ -7,8 +7,7 @@ The main objectif of this is to ensure that all SOX requirements are provided to
 
 ### design of the approach
 
-![ SOX CI/CD ](https://github.com/fsclyde/sox-github-perms/blob/master/images/soc_ci-cd.png "SOX")
-
+![ SOX CI/CD ](https://github.com/fsclyde/sox-hipaa-devops/blob/master/images/soc_ci-cd.png "SOX")
 
 ### Source Code
 
