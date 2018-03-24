@@ -53,7 +53,6 @@ More informations [ here ](https://insights.sei.cmu.edu/devops/2015/09/-a-devops
 * [x] Output of the script: handler_database.js
 * [x] CloudTrail and AWS Trusted Advisor Events
 
-
 ###  Software / Data Changes
 
 #### Software
