@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "activedirectory": "0.7.2",
-    "async": "2.6.0",
+    "async": "2.6.4",
     "aws-sdk": "2.187.0",
     "aws-xray-sdk": "1.2.0"
   },
